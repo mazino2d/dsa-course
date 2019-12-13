@@ -10,7 +10,8 @@ class SortAlgorithm {
         for(T e: array) System.out.println(e.toString());
     }
 
-    private static <E extends Comparable<E>> void selection_sort(E[] array) {
+    // https://www.geeksforgeeks.org/selection-sort/
+    public static <E extends Comparable<E>> void selection_sort(E[] array) {
         int size = array.length;
         // One by one move boundary of unsorted subarray 
         for(int i = 0; i < size; ++i) {
@@ -21,10 +22,20 @@ class SortAlgorithm {
             swap(array, i, idx);
         }
     }
+
+    // https://www.geeksforgeeks.org/bubble-sort/
+    public static <E extends Comparable<E>> void naive_bubble_sort(E[] array) {
+        int size = array.length;
+        
+        for(int i = 0; i < size - 1; ++i) {
+            for(int j = size - 1; j > i; --j)
+                if(array[j].compareTo(array[j - 1]) < 0) swap(array, j, j - 1);
+        }
+    }
+
     public static void main(String[] args) {
         Integer[] array = new Integer[] {9, 1, 3, 5, 2, 6,  4, 8, 7, 0};
-        selection_sort(array); print(array);
+        naive_bubble_sort(array); print(array);
 
-        
     }
 }
