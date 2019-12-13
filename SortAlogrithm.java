@@ -41,17 +41,30 @@ class SortAlgorithm {
         }
     }
 
-    // // https://www.geeksforgeeks.org/cocktail-sort/
-    // public static <E extends Comparable<E>> void cocktail_sort(E[] array) {
-        
-    // }
+    // https://www.geeksforgeeks.org/cocktail-sort/
+    public static <E extends Comparable<E>> void cocktail_sort(E[] array) {
+        int left = 0, right = array.length - 1, temp = 1;
+        while(left < right) {
+            for(int i = right; i > left; --i)
+                 // swap the adjacent elements if they are in wrong order.
+                if(array[i].compareTo(array[i - 1]) < 0)  
+                    {swap(array, i, i - 1); temp = i;}
+            left = temp;
+
+            for(int i = left; i < right; ++i)
+                 // swap the adjacent elements if they are in wrong order.
+                if(array[i].compareTo(array[i + 1]) > 0)  
+                    {swap(array, i, i + 1); temp = i;}
+            right = temp;
+        }
+    }
 
     
     public static void main(String[] args) {
         Integer[] array = new Integer[] {9, 1, 3, 5, 2, 6,  4, 8, 7, 0};
         // selection_sort(array); print(array);
         // naive_bubble_sort(array); print(array);
-        optimized_bubble_sort(array); print(array);
-        // cocktail_sort(array); print(array);
+        // optimized_bubble_sort(array); print(array);
+        cocktail_sort(array); print(array);
     }
 }
