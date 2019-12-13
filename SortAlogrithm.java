@@ -7,8 +7,9 @@ import java.util.function.Consumer;
  * @author Khoi Dang Do
  */
 class SortAlgorithm {
+    // Selection Sort
     // https://www.geeksforgeeks.org/selection-sort/
-    public static <E extends Comparable<E>> void selection_sort(E[] array) {
+    public final static <E extends Comparable<E>> void selection_sort(E[] array) {
         // One by one move boundary of unsorted subarray 
         for(int i = 0; i < array.length; ++i) {
             int idx = i; // Find the minimum element in unsorted array
@@ -19,15 +20,16 @@ class SortAlgorithm {
         }
     }
 
+    // Bubble Sort
     // https://www.geeksforgeeks.org/bubble-sort/
-    public static <E extends Comparable<E>> void naive_bubble_sort(E[] array) {
+    public final static <E extends Comparable<E>> void naive_bubble_sort(E[] array) {
         for(int i = 0; i < array.length - 1; ++i)
             for(int j = array.length - 1; j > i; --j)
                  // swap the adjacent elements if they are in wrong order.
                 if(array[j].compareTo(array[j - 1]) < 0)  swap(array, j, j - 1);
     }
 
-    public static <E extends Comparable<E>> void optimized_bubble_sort(E[] array) {
+    public final static <E extends Comparable<E>> void optimized_bubble_sort(E[] array) {
         for(int i = 0; i < array.length - 1; ++i) {
             boolean swapped = false;
             for(int j = array.length - 1; j > i; --j)
@@ -38,8 +40,9 @@ class SortAlgorithm {
         }
     }
 
+    // Cocktail Sort
     // https://www.geeksforgeeks.org/cocktail-sort/
-    public static <E extends Comparable<E>> void cocktail_sort(E[] array) {
+    public final static <E extends Comparable<E>> void cocktail_sort(E[] array) {
         int left = 0, right = array.length - 1, temp = 1;
         while(left < right) {
             for(int i = right; i > left; --i)
@@ -56,8 +59,9 @@ class SortAlgorithm {
         }
     }
 
+    // Insertion Sort
     // https://www.geeksforgeeks.org/insertion-sort/
-    public static <E extends Comparable<E>> void insertion_sort(E[] array) {
+    public final static <E extends Comparable<E>> void insertion_sort(E[] array) {
         for(int i = 1; i < array.length; ++i) {
             E key = array[i]; int idx = i - 1;
 
@@ -70,8 +74,9 @@ class SortAlgorithm {
         }
     }
 
+    // Shell Sort
     // https://www.geeksforgeeks.org/shellsort/
-    public static <E extends Comparable<E>> void shell_sort(E[] array) {
+    public final static <E extends Comparable<E>> void shell_sort(E[] array) {
         for(int gap = array.length/2; gap > 0; gap /= 2) {
             for(int i = gap; i < array.length; i += gap) {
                 E key = array[i]; int idx = i - gap;
@@ -86,6 +91,52 @@ class SortAlgorithm {
         }
     }
 
+    // Merge Sort
+    // https://www.geeksforgeeks.org/merge-sort/
+    public static <E extends Comparable<E>> void merge_sort(E[] array) {
+        recursive_merge_sort(array, 0, array.length - 1); 
+    }
+
+    private static <E extends Comparable<E>> void recursive_merge_sort(E[] array, int l, int r) {
+        if(l < r) {
+            int m = (l + r)/2; // Find the middle point 
+
+            // Sort first and second halves 
+            recursive_merge_sort(array, l, m);
+            recursive_merge_sort(array, m + 1, r);
+
+            // Merge the sorted halves
+            recursive_merge(array, l, m, r);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <E extends Comparable<E>> void recursive_merge(E[] array, int l, int m, int r) {
+        // Create two temporary array
+        E[] left = (E[])new Comparable[m - l + 1];
+        E[] right = (E[])new Comparable[r - m];
+        
+        // Copy data from original array to temporary array
+        for(int i = 0; i < left.length; ++i) left[i] = array[l + i];
+        for(int i = 0; i < right.length; ++i) right[i] = array[m + 1 + i];
+
+        // Merge the temp arrays
+        int l_idx = 0, r_idx = 0, idx = l;
+
+        while(l_idx < left.length && r_idx < right.length) {
+            if(left[l_idx].compareTo(right[r_idx]) <= 0)
+                array[idx] = left[l_idx++];
+            else 
+                array[idx] = right[r_idx++];
+
+            idx = idx + 1;
+        }
+
+        // Copy remaining elements of L and R to original array
+        while(l_idx < left.length) array[idx++] = left[l_idx++];
+        while(r_idx < right.length) array[idx++] = right[r_idx++];
+    }
+
     public static void main(String[] args) {
         test(100,5000, "Selection Sort",SortAlgorithm::selection_sort);
         test(100,5000, "Bubble Sort 1",SortAlgorithm::naive_bubble_sort);
@@ -93,6 +144,7 @@ class SortAlgorithm {
         test(100,5000, "Cooktail Sort",SortAlgorithm::cocktail_sort);
         test(100,5000, "Insertion Sort",SortAlgorithm::insertion_sort);
         test(100,5000, "Shell Sort",SortAlgorithm::shell_sort);
+        test(100,5000, "Merge Sort",SortAlgorithm::merge_sort);
     }
 
     // swap 2 element of array
@@ -122,8 +174,10 @@ class SortAlgorithm {
         }
         long end = System.nanoTime();
         
-        System.out.print(test_name + "\t\t");
-        System.out.print(count + "/" + test_size + "\t");
-        System.out.println((end - start) / Math.pow(10, 9) + "(s)");
+        System.out.print(test_name + "\t" + count + "/" + test_size + "\t");
+        System.out.print((end - start) / Math.pow(10, 9) + "(s)");
+
+        if(count == test_size) System.out.println(" SUCCESS ");
+        else System.out.println(" FAIL ");
     }
 }
