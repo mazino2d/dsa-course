@@ -1,15 +1,8 @@
 /**
- * SortAlgoritm
+ * SortAlgorithm
+ * @author  Khoi Dang Do
  */
 class SortAlgorithm {
-    private static <T> void swap(T[] array, int i, int j) {
-        T temp = array[i]; array[i] = array[j]; array[j] = temp;
-    }
-
-    private static <T> void print(T[] array) {
-        for(T e: array) System.out.println(e.toString());
-    }
-
     // https://www.geeksforgeeks.org/selection-sort/
     public static <E extends Comparable<E>> void selection_sort(E[] array) {
         // One by one move boundary of unsorted subarray 
@@ -73,12 +66,47 @@ class SortAlgorithm {
         }
     }
 
+    // https://www.geeksforgeeks.org/shellsort/
+    public static <E extends Comparable<E>> void shell_sort(E[] array) {
+        for(int gap = array.length/2; gap > 0; gap /= 2) {
+            for(int i = gap; i < array.length; i += gap) {
+                E key = array[i]; int idx = i - gap;
+    
+                /* Move elements of arr[0..i-1], that are  greater than key, 
+                to one position ahead  of their current position */
+                while(idx >= 0 && array[idx].compareTo(key) > 0)
+                    {array[idx + gap] = array[idx]; idx = idx - gap;}
+    
+                array[idx + gap] = key;
+            }
+        }
+    }
+
     public static void main(String[] args) {
         Integer[] array = new Integer[] {9, 1, 3, 5, 2, 6,  4, 8, 7, 0};
         // selection_sort(array); print(array);
         // naive_bubble_sort(array); print(array);
         // optimized_bubble_sort(array); print(array);
         // cocktail_sort(array); print(array);
-        insertion_sort(array); print(array);
+        // insertion_sort(array); print(array);
+        shell_sort(array); print(array);
+    }
+
+    // swap 2 element of array
+    private static <T> void swap(T[] array, int i, int j) {
+        T temp = array[i]; array[i] = array[j]; array[j] = temp;
+    }
+
+    // print all element of array
+    private static <T> void print(T[] array) {
+        for(T e: array) System.out.println(e.toString());
+    }
+
+    // check if array is in ascending order java
+    private static <T extends Comparable<T>> boolean check(T[] array) {
+        for (int i = 0; i < array.length - 1; ++i)
+            if (array[i].compareTo(array[i + 1]) > 0) return false;
+        
+        return true; // If 
     }
 }
