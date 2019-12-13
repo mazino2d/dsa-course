@@ -1,6 +1,10 @@
+import java.util.Random;
+import java.util.function.Consumer;
+
 /**
  * SortAlgorithm
- * @author  Khoi Dang Do
+ * 
+ * @author Khoi Dang Do
  */
 class SortAlgorithm {
     // https://www.geeksforgeeks.org/selection-sort/
@@ -83,23 +87,17 @@ class SortAlgorithm {
     }
 
     public static void main(String[] args) {
-        Integer[] array = new Integer[] {9, 1, 3, 5, 2, 6,  4, 8, 7, 0};
-        // selection_sort(array); print(array);
-        // naive_bubble_sort(array); print(array);
-        // optimized_bubble_sort(array); print(array);
-        // cocktail_sort(array); print(array);
-        // insertion_sort(array); print(array);
-        shell_sort(array); print(array);
+        test(100,5000, "Selection Sort",SortAlgorithm::selection_sort);
+        test(100,5000, "Bubble Sort 1",SortAlgorithm::naive_bubble_sort);
+        test(100,5000, "Bubble Sort 2",SortAlgorithm::optimized_bubble_sort);
+        test(100,5000, "Cooktail Sort",SortAlgorithm::cocktail_sort);
+        test(100,5000, "Insertion Sort",SortAlgorithm::insertion_sort);
+        test(100,5000, "Shell Sort",SortAlgorithm::shell_sort);
     }
 
     // swap 2 element of array
     private static <T> void swap(T[] array, int i, int j) {
         T temp = array[i]; array[i] = array[j]; array[j] = temp;
-    }
-
-    // print all element of array
-    private static <T> void print(T[] array) {
-        for(T e: array) System.out.println(e.toString());
     }
 
     // check if array is in ascending order java
@@ -108,5 +106,24 @@ class SortAlgorithm {
             if (array[i].compareTo(array[i + 1]) > 0) return false;
         
         return true; // If 
+    }
+
+    // generate test case for sort function
+    private static void test( int test_size, int array_size, 
+        String test_name, Consumer<Integer[]> function)         
+    {
+        Random rd = new Random(1);  int count = 0; 
+        Integer[] array = new Integer[array_size];
+
+        long start = System.nanoTime();
+        for(int i = 0; i < test_size; ++i) {
+            for (int j = 0; j < array.length; ++j) array[j] = rd.nextInt();
+            function.accept(array);  if(check(array)) ++count;
+        }
+        long end = System.nanoTime();
+        
+        System.out.print(test_name + "\t\t");
+        System.out.print(count + "/" + test_size + "\t");
+        System.out.println((end - start) / Math.pow(10, 9) + "(s)");
     }
 }
