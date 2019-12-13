@@ -59,12 +59,26 @@ class SortAlgorithm {
         }
     }
 
-    
+    // https://www.geeksforgeeks.org/insertion-sort/
+    public static <E extends Comparable<E>> void insertion_sort(E[] array) {
+        for(int i = 1; i < array.length; ++i) {
+            E key = array[i]; int idx = i - 1;
+
+            /* Move elements of arr[0..i-1], that are  greater than key, 
+            to one position ahead  of their current position */
+            while(idx >= 0 && array[idx].compareTo(key) > 0)
+                {array[idx + 1] = array[idx]; idx = idx - 1;}
+
+            array[idx + 1] = key;
+        }
+    }
+
     public static void main(String[] args) {
         Integer[] array = new Integer[] {9, 1, 3, 5, 2, 6,  4, 8, 7, 0};
         // selection_sort(array); print(array);
         // naive_bubble_sort(array); print(array);
         // optimized_bubble_sort(array); print(array);
-        cocktail_sort(array); print(array);
+        // cocktail_sort(array); print(array);
+        insertion_sort(array); print(array);
     }
 }
