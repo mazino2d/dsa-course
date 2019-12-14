@@ -137,6 +137,37 @@ class SortAlgorithm {
         while(r_idx < right.length) array[idx++] = right[r_idx++];
     }
 
+    // Quick Sort
+    // https://www.geeksforgeeks.org/quick-sort/
+    public static <E extends Comparable<E>> void quick_sort(E[] array) {
+        recursive_quick_sort(array, 0, array.length - 1);
+    }
+
+    private static <E extends Comparable<E>> void recursive_quick_sort(E[] array, int low, int high) {
+        if(low < high) {
+            // pi is partitioning index, arr[pi] is now at right place
+            int pi = partition(array, low, high);
+
+            // Recursively sort elements before partition and after partition 
+            recursive_quick_sort(array, low, pi - 1);
+            recursive_quick_sort(array, pi + 1, high);
+        }
+    }
+
+    private static <E extends Comparable<E>> int partition(E[] array, int low, int high) {
+        E pivot = array[high]; int left = low, right = high - 1;
+
+        while(true) {
+            while (left <= right && array[left].compareTo(pivot) < 0) ++left; 
+            while (right >= left && array[right].compareTo(pivot) > 0) --right;
+
+            if(left >= right) break; else swap(array, left++, right--);
+        }
+        swap(array, left, high);
+
+        return left;
+    }
+    
     public static void main(String[] args) {
         test(100,5000, "Selection Sort",SortAlgorithm::selection_sort);
         test(100,5000, "Bubble Sort 1",SortAlgorithm::naive_bubble_sort);
@@ -145,14 +176,15 @@ class SortAlgorithm {
         test(100,5000, "Insertion Sort",SortAlgorithm::insertion_sort);
         test(100,5000, "Shell Sort",SortAlgorithm::shell_sort);
         test(100,5000, "Merge Sort",SortAlgorithm::merge_sort);
+        test(100,5000, "Quick Sort",SortAlgorithm::quick_sort);
     }
 
-    // swap 2 element of array
+    // Swap 2 element of array
     private static <T> void swap(T[] array, int i, int j) {
         T temp = array[i]; array[i] = array[j]; array[j] = temp;
     }
 
-    // check if array is in ascending order java
+    // Check if array is in ascending order java
     private static <T extends Comparable<T>> boolean check(T[] array) {
         for (int i = 0; i < array.length - 1; ++i)
             if (array[i].compareTo(array[i + 1]) > 0) return false;
@@ -160,7 +192,7 @@ class SortAlgorithm {
         return true; // If 
     }
 
-    // generate test case for sort function
+    // Generate test case for sort function
     private static void test( int test_size, int array_size, 
         String test_name, Consumer<Integer[]> function)         
     {
