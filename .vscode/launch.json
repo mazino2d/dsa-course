@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - DriverTest",
+            "request": "launch",
+            "mainClass": "datastructure.DriverTest",
+            "projectName": "dsa-course_51f4ab4a"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - SortAlgorithm",
             "request": "launch",
             "mainClass": "SortAlgorithm",

@@ -1,3 +1,5 @@
+package algorithm;
+
 import java.util.Random;
 import java.util.function.Consumer;
 
