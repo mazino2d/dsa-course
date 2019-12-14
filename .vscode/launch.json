@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - QueueDriverTest",
+            "request": "launch",
+            "mainClass": "datastructure.QueueDriverTest",
+            "projectName": "dsa-course_51f4ab4a"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - StackDriverTest",
             "request": "launch",
             "mainClass": "datastructure.StackDriverTest",
@@ -12,13 +19,6 @@
             "name": "CodeLens (Launch) - LinkedListDriverTest",
             "request": "launch",
             "mainClass": "datastructure.LinkedListDriverTest",
-            "projectName": "dsa-course_51f4ab4a"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - DriverTest",
-            "request": "launch",
-            "mainClass": "datastructure.DriverTest",
             "projectName": "dsa-course_51f4ab4a"
         },
         {
