@@ -5,33 +5,14 @@ import java.util.Iterator;
 /**
  * LinkedList
  */
-public class LinkedList<T> implements Iterable<T> {
-
-    private Node head; private int size;
+public class LinkedList<T> extends  Stack<T> implements Iterable<T> {
 
     // Default constructor
-    public LinkedList() { head = null; size = 0; }
+    public LinkedList() { super(); }
 
     // Copy constructor
     public LinkedList(Iterable<T> copy) {
-        for(T e: copy) this.append(e); this.reverse();
-    }
-
-    // Insert new node at first node
-    public void append(T data) {
-        // Create a new node with given data
-        Node new_node = new Node(data);
-
-        // Insert new node at first node
-        if (this.head == null)
-            this.head = new_node;
-        else {
-            new_node.next = this.head;
-            this.head = new_node;
-        }
-
-        // Increase size of list
-        this.size = this.size + 1;
+        for(T e: copy) this.push(e); this.reverse();
     }
 
     // Insert new specific node by index
@@ -41,7 +22,7 @@ public class LinkedList<T> implements Iterable<T> {
             throw new IndexOutOfBoundsException(String.format("Index: %d, Size: %d", index, this.size));
 
         if (index == 0)
-            this.append(data);
+            this.push(data);
         else {
             // Create a new node with given data
             Node new_node = new Node(data);
@@ -57,17 +38,6 @@ public class LinkedList<T> implements Iterable<T> {
 
         // Increase size of list
         this.size = this.size + 1;
-    }
-
-    // Remove first node from list
-    public void pop() {
-        // Stop if the list is empty
-        if (this.size == 0)
-            return;
-        // Remove the head element
-        this.head = this.head.next;
-        // Decrease size of list
-        this.size = this.size - 1;
     }
 
     // Remove specific node by index
@@ -107,20 +77,11 @@ public class LinkedList<T> implements Iterable<T> {
         while(current != null) {
             next = current.next;
             current.next = previous;
-            previous = current;
+            previous =  current;
             current = next;
         }
 
         this.head = previous;
-    }
-
-    class Node {
-        T data;
-        Node next = null;
-
-        Node(T data) {
-            this.data = data;
-        }
     }
 
     // Implement iterable(for-each) interface 
@@ -155,13 +116,12 @@ public class LinkedList<T> implements Iterable<T> {
     } 
 }
 
-
-class DriverTest {
+class LinkedListDriverTest {
 
     public static void main(String[] args) {
         // write test form here
         LinkedList<Integer> list = new LinkedList<Integer>();
-        list.append(1); list.append(2); list.append(3);
+        list.push(1); list.push(2); list.push(3);
         for(Integer e: list) System.out.println(e);
     }
 }
