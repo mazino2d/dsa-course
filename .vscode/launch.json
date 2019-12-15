@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - AdjacencyMatrixDriverTest",
+            "request": "launch",
+            "mainClass": "datastructure.AdjacencyMatrixDriverTest",
+            "projectName": "dsa-course_51f4ab4a"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - HeapDriverTest",
             "request": "launch",
             "mainClass": "datastructure.HeapDriverTest",
